@@ -3,7 +3,7 @@ require("dotenv").config();
 const app = require("./app");
 const PORT = process.env.PORT || 8000;
 
-// create server with http module
+// create src with http module
 const server = http.createServer(app);
 
 async function startServer() {
