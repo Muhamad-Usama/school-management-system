@@ -1,0 +1,42 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+debug.log
+
+# Build output
+dist/
+build/
+coverage/
+
+# WebStorm project files
+.idea/
+*.iml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache and temporary files
+.tmp/
+.vscode/
+.cache/
+*.swp
+*.swo
+
+# Test reports
+*.test-results/
+*.test-coverage/
+
