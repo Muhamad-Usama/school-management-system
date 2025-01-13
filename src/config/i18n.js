@@ -16,7 +16,7 @@ i18next
         preload: ['en', 'ru'],                 // Default namespace
         saveMissing: true, // Save missing keys to the translation files
 
-    }).then(r => console.log(r)).catch(e => console.error(e));
+    }).then(r => console.log("i18n initialized successfully")).catch(e => console.error(e));
 
 module.exports = {
     i18nMiddleware: middleware.handle(i18next)
