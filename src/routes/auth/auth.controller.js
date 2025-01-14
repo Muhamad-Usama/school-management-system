@@ -2,7 +2,6 @@ const {findUserByEmail, saveUser, existsUserWithEmail} = require("../../models/u
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const BaseResponse = require("../../base/BaseResponse");
-const NotFoundError = require("../../exceptions/NotFoundError");
 const InvalidCredentialsError = require("../../exceptions/InvalidCredentialsError");
 
 /**
