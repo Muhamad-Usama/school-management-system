@@ -11,5 +11,14 @@
   "user.email.required": "Email is required",
   "user.password.required": "Password is required",
   "user.name.required": "Name is required",
-  "user.not.found": "User not found"
+  "user.not.found": "User not found",
+  "user.firstName.required": "First name is required",
+  "user.firstName.invalid": "First name is invalid",
+  "user.firstName.length": "First name must be between 3 and 30 characters",
+  "user.lastName.required": "Last name is required",
+  "user.lastName.invalid": "Last name is invalid",
+  "user.lastName.length": "Last name must be between 3 and 30 characters",
+  "user.confirmPassword.required": "Confirm password is required",
+  "user.confirmPassword.mismatch": "Passwords do not match",
+  "invalid.credentials": "Invalid credentials"
 }
