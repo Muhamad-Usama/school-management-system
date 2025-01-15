@@ -19,5 +19,5 @@ i18next
     }).then(r => console.log("i18n initialized successfully")).catch(e => console.error(e));
 
 module.exports = {
-    i18nMiddleware: middleware.handle(i18next)
+    i18nMiddleware: middleware.handle(i18next), translate: i18next.t
 };

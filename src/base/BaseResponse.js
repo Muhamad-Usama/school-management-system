@@ -1,4 +1,5 @@
 const StatusCodes = require('../constants/StatusCodes');
+const {translate} = require("../config/i18n");
 
 class BaseResponse {
     constructor(code, message = null, body = null) {
@@ -13,6 +14,10 @@ class BaseResponse {
 
     static error(code, message) {
         return new BaseResponse(code, message);
+    }
+
+    static notFoundError(message) {
+        return new this.error(StatusCodes.NOT_FOUND, translate(message));
     }
 }
 
