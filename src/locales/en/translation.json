@@ -1,4 +1,24 @@
 {
-  "something_went_wrong": "Something",
-  "unauthorized": "Unauthorized"
+  "something_went_wrong": "Something went wrong, please try again",
+  "unauthorized": "Unauthorized, Sign in to continue",
+  "fields.validation.failed": "Fields validation failed, some fields are missing or invalid",
+  "email.already.exists": "Email already exists, try another one",
+  "user.save.failed": "User save failed, please try again",
+  "user.password.min": "Password must be at least 8 characters",
+  "user.email.invalid": "Email is invalid",
+  "user.name.invalid": "Name is invalid",
+  "user.name.length": "Name must be between 3 and 30 characters",
+  "user.email.required": "Email is required",
+  "user.password.required": "Password is required",
+  "user.name.required": "Name is required",
+  "user.not.found": "User not found",
+  "user.firstName.required": "First name is required",
+  "user.firstName.invalid": "First name is invalid",
+  "user.firstName.length": "First name must be between 3 and 30 characters",
+  "user.lastName.required": "Last name is required",
+  "user.lastName.invalid": "Last name is invalid",
+  "user.lastName.length": "Last name must be between 3 and 30 characters",
+  "user.confirmPassword.required": "Confirm password is required",
+  "user.confirmPassword.mismatch": "Passwords do not match",
+  "invalid.credentials": "Invalid credentials"
 }
