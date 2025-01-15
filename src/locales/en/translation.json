@@ -29,5 +29,10 @@
   "school.not.found": "School not found",
   "classroom.name.required": "Classroom name is required",
   "classroom.capacity.invalid": "Classroom capacity must be a positive integer",
-  "classroom.not.found": "Classroom not found"
+  "classroom.not.found": "Classroom not found",
+  "student.firstName.required": "First name is required",
+  "student.lastName.required": "Last name is required",
+  "student.email.invalid": "Email is invalid",
+  "student.dateOfBirth.required": "Date of birth is required",
+  "student.not.found": "Student not found"
 }
