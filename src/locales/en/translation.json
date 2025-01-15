@@ -20,5 +20,10 @@
   "user.lastName.length": "Last name must be between 3 and 30 characters",
   "user.confirmPassword.required": "Confirm password is required",
   "user.confirmPassword.mismatch": "Passwords do not match",
-  "invalid.credentials": "Invalid credentials"
+  "invalid.credentials": "Invalid credentials",
+  "school.name.required": "School name is required",
+  "school.address.required": "School address is required",
+  "school.contactEmail.invalid": "Contact email is invalid",
+  "school.contactPhone.required": "Contact phone is required",
+  "school.not.found": "School not found"
 }

@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const {i18nMiddleware} = require("./config/i18n.js");
 const userRouter = require("./routes/users/users.routes");
+const schoolRouter = require("./routes/schools/school.routes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(morgan("combined"));
 
 // add routes here
 app.use("/api/users", userRouter);
+app.use("/api/schools", schoolRouter);
 
 module.exports = app;
 
