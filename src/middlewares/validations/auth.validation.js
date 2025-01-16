@@ -1,7 +1,6 @@
 const {body} = require('express-validator');
 
-const signUpValidations = [
-    // Email validation
+const signupValidator = [// Email validation
     body('email')
         .notEmpty()
         .withMessage("user.email.required")
@@ -34,6 +33,9 @@ const signUpValidations = [
         .withMessage("user.lastName.length")
         .bail(),
 
+    body('role').notEmpty().withMessage("user.role.required").bail()
+        .isIn(["Student", "Teacher", "Admin"]).withMessage("user.role.invalid").bail(),
+
     // Password validation
     body('password')
         .notEmpty()
@@ -54,11 +56,9 @@ const signUpValidations = [
             }
             return true;
         })
-        .bail()
-];
+        .bail()];
 
-const signInValidations = [
-    // Email validation
+const signinValidator = [// Email validation
     body('email')
         .notEmpty()
         .withMessage("user.email.required")
@@ -74,10 +74,8 @@ const signInValidations = [
         .bail()
         .isLength({min: 8})
         .withMessage("user.password.min")
-        .bail()
-];
+        .bail()];
 
 module.exports = {
-    signUpValidations,
-    signInValidations,
+    signupValidator, signinValidator
 };
