@@ -3,7 +3,7 @@ const StatusCodes = {
     DUPLICATE_RECORD: 1005, // Custom code for "duplicate record"
     INVALID_DATA: 1006, // Custom code for "invalid data"
     INTERNAL_SERVER_ERROR: 500, // Add more codes as needed
-    INVALID_CREDENTIALS: 1007,
+    INVALID_CREDENTIALS: 1007, TOO_MANY_REQUESTS: 1029,
 };
 
 module.exports = StatusCodes;
