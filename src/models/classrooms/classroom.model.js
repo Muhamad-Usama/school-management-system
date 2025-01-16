@@ -1,4 +1,4 @@
-const Classroom = require('./classrooms.mongo');
+const Classroom = require('./classroom.mongo');
 
 /**
  * Find a classroom by ID.
