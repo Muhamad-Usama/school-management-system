@@ -34,5 +34,16 @@
   "student.lastName.required": "Last name is required",
   "student.email.invalid": "Email is invalid",
   "student.dateOfBirth.required": "Date of birth is required",
-  "student.not.found": "Student not found"
+  "student.not.found": "Student not found",
+  "user.role.required": "Role is required",
+  "user.role.invalid": "Role is invalid",
+  "user.auth.failed": "User authentication failed",
+  "resource.forbidden": "Resource forbidden",
+  "internal.server.error": "Internal server error",
+  "refresh.token.expired": "Refresh token expired",
+  "refresh.token.required": "Refresh token is required",
+  "user.email.exists": "Email already exists",
+  "redis.client.error": "Redis client error while connecting",
+  "redis.client.failed": "Redis client failed to connect",
+  "redis.client.connected": "Redis client connected successfully"
 }
