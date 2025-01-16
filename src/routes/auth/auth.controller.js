@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const BaseResponse = require("../../base/BaseResponse");
 const InvalidCredentialsError = require("../../exceptions/InvalidCredentialsError");
-const {redisClient} = require("../../config/connectRedis");
+const {redisClient} = require("../../config/redisClient");
 const StatusCodes = require("../../constants/StatusCodes");
 
 /**
