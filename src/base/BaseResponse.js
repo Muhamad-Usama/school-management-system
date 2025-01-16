@@ -13,7 +13,7 @@ class BaseResponse {
     }
 
     static error(code, message) {
-        return new BaseResponse(code, message);
+        return new BaseResponse(code, translate(message));
     }
 
     static notFoundError(message) {
