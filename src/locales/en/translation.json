@@ -20,5 +20,19 @@
   "user.lastName.length": "Last name must be between 3 and 30 characters",
   "user.confirmPassword.required": "Confirm password is required",
   "user.confirmPassword.mismatch": "Passwords do not match",
-  "invalid.credentials": "Invalid credentials"
+  "invalid.credentials": "Invalid credentials",
+  "school.name.required": "School name is required",
+  "school.id.required": "School id is required",
+  "school.address.required": "School address is required",
+  "school.contactEmail.invalid": "Contact email is invalid",
+  "school.contactPhone.required": "Contact phone is required",
+  "school.not.found": "School not found",
+  "classroom.name.required": "Classroom name is required",
+  "classroom.capacity.invalid": "Classroom capacity must be a positive integer",
+  "classroom.not.found": "Classroom not found",
+  "student.firstName.required": "First name is required",
+  "student.lastName.required": "Last name is required",
+  "student.email.invalid": "Email is invalid",
+  "student.dateOfBirth.required": "Date of birth is required",
+  "student.not.found": "Student not found"
 }
