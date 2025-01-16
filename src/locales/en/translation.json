@@ -1,5 +1,5 @@
 {
-  "something_went_wrong": "Something went wrong, please try again",
+  "something.went.wrong": "Something went wrong, please try again",
   "unauthorized": "Unauthorized, Sign in to continue",
   "fields.validation.failed": "Fields validation failed, some fields are missing or invalid",
   "email.already.exists": "Email already exists, try another one",
@@ -45,5 +45,6 @@
   "user.email.exists": "Email already exists",
   "redis.client.error": "Redis client error while connecting",
   "redis.client.failed": "Redis client failed to connect",
-  "redis.client.connected": "Redis client connected successfully"
+  "redis.client.connected": "Redis client connected successfully",
+  "rate.limit.exceeded": "Rate limit exceeded, please try again later"
 }
