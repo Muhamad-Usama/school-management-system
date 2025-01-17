@@ -70,7 +70,7 @@ async function deleteStudentById(studentId) {
  * @returns {Promise<Array<Object>>}
  */
 async function getAllStudents(limit = 10, skip = 0) {
-    return Student.find({}, {__v: 0, _id: 0, password: 0}) // Exclude sensitive fields
+    return Student.find({}, {__v: 0, _id: 0}) // Exclude sensitive fields
         .sort({name: 1}) // Sort by name alphabetically
         .skip(skip)
         .limit(limit);
