@@ -5,7 +5,9 @@ const ClassroomSchema = new mongoose.Schema({
     schoolId: {type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true},
     capacity: {type: Number, required: true},
     resources: [{
-        type: {type: String, required: true}, quantity: {type: Number, required: true}
+        type: {type: String, required: true},
+        quantity: {type: Number, required: true},
+        condition: {type: String, enum: ['New', 'Good', 'Fair', 'Poor'], default: 'Good'}
     }],
     createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     createdAt: {type: Date, default: Date.now},

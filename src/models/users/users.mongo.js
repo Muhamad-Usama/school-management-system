@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     },
     password: {type: String, required: true, minlength: 8},
     role: {
-        type: String, enum: ["Student", "Teacher", "Admin"], required: true, default: "Student",
+        type: String, enum: ["Superadmin", "Administrator", "Student"], required: true, default: "Student",
     },
     active: {type: Boolean, default: true},
     invalidLoginAttempts: {type: Number, default: 0},

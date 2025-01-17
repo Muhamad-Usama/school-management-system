@@ -34,7 +34,7 @@ const signupValidator = [// Email validation
         .bail(),
 
     body('role').notEmpty().withMessage("user.role.required").bail()
-        .isIn(["Student", "Teacher", "Admin"]).withMessage("user.role.invalid").bail(),
+        .isIn(["Superadmin", "Administrator", "Student"]).withMessage("user.role.invalid").bail(),
 
     // Password validation
     body('password')
