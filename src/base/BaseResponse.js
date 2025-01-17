@@ -17,7 +17,7 @@ class BaseResponse {
     }
 
     static notFoundError(message) {
-        return new this.error(StatusCodes.NOT_FOUND, translate(message));
+        return this.error(StatusCodes.NOT_FOUND, translate(message));
     }
 }
 

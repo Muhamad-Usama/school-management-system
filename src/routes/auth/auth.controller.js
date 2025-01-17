@@ -33,13 +33,13 @@ const signIn = async (req, res) => {
         if (existingUser.invalidLoginAttempts >= 5) {
             existingUser.lockLogin = new Date(Date.now() + 30 * 60 * 1000); // Lock for 30 minutes
         }
-        await existingUser.save();
+        await saveUser(existingUser);
         throw new InvalidCredentialsError("invalid.credentials");
     }
 
     existingUser.invalidLoginAttempts = 0;
     existingUser.lockLogin = null;
-    await existingUser.save();
+    await saveUser(existingUser);
 
     const accessToken = generateAccessToken(existingUser);
     const refreshToken = await generateRefreshToken(existingUser);
