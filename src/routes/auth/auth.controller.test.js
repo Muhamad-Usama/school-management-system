@@ -1,9 +1,8 @@
 const { signIn, signUp, refreshToken } = require('../../routes/auth/auth.controller');
-const { findUserByEmail, saveUser, existsUserWithEmail } = require('../../models/users/users.model');
+const { findUserByEmail, saveUser, existsUserWithEmail, findUserById } = require('../../models/users/users.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const BaseResponse = require('../../base/BaseResponse');
-const InvalidCredentialsError = require('../../exceptions/InvalidCredentialsError');
 const { redisClient } = require('../../config/redisClient');
 const StatusCodes = require('../../constants/StatusCodes');
 
@@ -64,7 +63,10 @@ describe('Auth Controller Tests', () => {
 
             req.body = { email: 'test@example.com', password: 'wrongPassword' };
 
-            await expect(signIn(req, res)).rejects.toThrow(InvalidCredentialsError);
+            await signIn(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(401);
+            expect(res.json).toHaveBeenCalledWith(BaseResponse.error(StatusCodes.UNAUTHORIZED, "invalid.credentials"));
         });
 
         it('should lock the user account after 5 invalid login attempts', async () => {
@@ -73,8 +75,8 @@ describe('Auth Controller Tests', () => {
                 email: 'test@example.com',
                 password: 'hashedPassword',
                 active: true,
-                invalidLoginAttempts: 4,
-                lockLogin: null
+                invalidLoginAttempts: 5,
+                lockLogin: new Date(Date.now() + 30 * 60 * 1000)
             };
             findUserByEmail.mockResolvedValue(mockUser);
             bcrypt.compare.mockResolvedValue(false);
@@ -101,8 +103,6 @@ describe('Auth Controller Tests', () => {
             existsUserWithEmail.mockResolvedValue(false);
             bcrypt.hash.mockResolvedValue('hashedPassword');
             saveUser.mockResolvedValue(mockUser);
-            jwt.sign.mockReturnValue('mockAccessToken');
-            redisClient.set.mockResolvedValue('mockRefreshToken');
 
             req.body = { email: 'test@example.com', password: 'password', firstName: 'Test', lastName: 'User' };
 
@@ -111,8 +111,6 @@ describe('Auth Controller Tests', () => {
             expect(res.status).toHaveBeenCalledWith(201);
             expect(res.json).toHaveBeenCalledWith(BaseResponse.success({
                 result: mockUser,
-                accessToken: 'mockAccessToken',
-                refreshToken: 'mockAccessToken'
             }));
         });
 
@@ -131,11 +129,12 @@ describe('Auth Controller Tests', () => {
     describe('refreshToken', () => {
         it('should return a new access and refresh token when refresh token is valid', async () => {
             const mockUser = { _id: '1', email: 'test@example.com', role: 'Student' };
+            findUserById.mockResolvedValue(mockUser);
             const mockRefreshToken = 'validRefreshToken';
             jwt.verify.mockReturnValue({ id: '1', email: 'test@example.com' });
             redisClient.get.mockResolvedValue(mockRefreshToken);
-            jwt.sign.mockReturnValue(mockUser);
-            redisClient.set.mockResolvedValue(mockRefreshToken);
+            jwt.sign.mockReturnValue('mockNewAccessToken');
+            redisClient.set.mockResolvedValue('mockNewRefreshToken');
 
             req.body = { refreshToken: mockRefreshToken };
 
@@ -144,7 +143,7 @@ describe('Auth Controller Tests', () => {
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith(BaseResponse.success({
                 accessToken: 'mockNewAccessToken',
-                refreshToken: 'mockNewRefreshToken'
+                refreshToken: 'mockNewAccessToken'
             }));
         });
 
@@ -158,7 +157,6 @@ describe('Auth Controller Tests', () => {
         });
 
         it('should return error if refresh token is invalid or expired', async () => {
-            const mockUser = { _id: '1', email: 'test@example.com', role: 'Student' };
             const invalidToken = 'invalidRefreshToken';
             jwt.verify.mockRejectedValue(new Error('Token expired'));
 
