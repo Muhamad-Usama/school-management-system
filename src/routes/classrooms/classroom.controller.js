@@ -1,10 +1,5 @@
 const {
-    findClassroomById,
-    saveClassroom,
-    updateClassroomById,
-    deleteClassroomById,
-    getAllClassrooms,
-    existsClassroomByName
+    findClassroomById, saveClassroom, updateClassroomById, deleteClassroomById, getAllClassrooms, existsClassroomByName
 } = require('../../models/classrooms/classroom.model');
 const BaseResponse = require("../../base/BaseResponse");
 const StatusCodes = require("../../constants/StatusCodes");
@@ -12,13 +7,13 @@ const StatusCodes = require("../../constants/StatusCodes");
 const httpCreateClassroom = async (req, res) => {
     try {
         const exists = await existsClassroomByName(req.body.name);
-        if(exists) {
+        if (exists) {
             return res.status(409).json(BaseResponse.error(StatusCodes.DUPLICATE_RECORD, 'classrooms.already.exists'));
         }
         const classroom = await saveClassroom(req.body);
         res.status(201).json(BaseResponse.success(classroom));
     } catch (error) {
-        res.status(500).json({error: error.message});
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, error.message ?? "internal.server.error"));
     }
 };
 
@@ -27,7 +22,7 @@ const httpGetClassrooms = async (req, res) => {
         const classrooms = await getAllClassrooms();
         res.status(200).json(BaseResponse.success(classrooms));
     } catch (error) {
-        res.status(500).json({error: error.message});
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, error.message ?? "internal.server.error"));
     }
 };
 
@@ -39,7 +34,7 @@ const httpGetClassroomById = async (req, res) => {
         }
         res.status(200).json(BaseResponse.success(classroom));
     } catch (error) {
-        res.status(500).json({error: error.message});
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, error.message ?? "internal.server.error"));
     }
 };
 
@@ -51,7 +46,7 @@ const httpUpdateClassroom = async (req, res) => {
         }
         res.status(200).json(BaseResponse.success(classroom));
     } catch (error) {
-        res.status(500).json({error: error.message});
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, error.message ?? "internal.server.error"));
     }
 };
 
@@ -63,7 +58,7 @@ const httpDeleteClassroom = async (req, res) => {
         }
         res.status(200).json(BaseResponse.success({deleted: true}));
     } catch (error) {
-        res.status(500).json({error: error.message});
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, error.message ?? "internal.server.error"));
     }
 };
 
