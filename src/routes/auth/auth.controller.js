@@ -1,8 +1,7 @@
-const {findUserByEmail, saveUser, existsUserWithEmail} = require("../../models/users/users.model");
+const {findUserByEmail, saveUser, existsUserWithEmail, findUserById} = require("../../models/users/users.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const BaseResponse = require("../../base/BaseResponse");
-const InvalidCredentialsError = require("../../exceptions/InvalidCredentialsError");
 const {redisClient} = require("../../config/redisClient");
 const StatusCodes = require("../../constants/StatusCodes");
 
@@ -20,7 +19,7 @@ const signIn = async (req, res) => {
 
     const existingUser = await findUserByEmail(email);
     if (!existingUser || !existingUser.active) {
-        throw new InvalidCredentialsError("invalid.credentials");
+        return res.status(401).json(BaseResponse.error(StatusCodes.UNAUTHORIZED, "invalid.credentials"));
     }
 
     if (existingUser.lockLogin && new Date() < existingUser.lockLogin) {
@@ -34,7 +33,7 @@ const signIn = async (req, res) => {
             existingUser.lockLogin = new Date(Date.now() + 30 * 60 * 1000); // Lock for 30 minutes
         }
         await saveUser(existingUser);
-        throw new InvalidCredentialsError("invalid.credentials");
+        return res.status(401).json(BaseResponse.error(StatusCodes.UNAUTHORIZED, "invalid.credentials"));
     }
 
     existingUser.invalidLoginAttempts = 0;
@@ -73,10 +72,8 @@ const signUp = async (req, res) => {
 
     const result = await saveUser(user);
 
-    const accessToken = generateAccessToken(result);
-    const refreshToken = await generateRefreshToken(result);
 
-    res.status(201).json(BaseResponse.success({result, accessToken, refreshToken}));
+    res.status(201).json(BaseResponse.success({result}));
 };
 
 /**
@@ -124,7 +121,7 @@ const refreshToken = async (req, res) => {
             return res.status(401).json(BaseResponse.error(StatusCodes.UNAUTHORIZED, "refresh.token.expired"));
         }
 
-        const user = await findUserByEmail(decoded.email);
+        const user = await findUserById(decoded.id);
         if (!user) {
             return res.status(404).json(BaseResponse.error(StatusCodes.NOT_FOUND, "user.not.found"));
         }
