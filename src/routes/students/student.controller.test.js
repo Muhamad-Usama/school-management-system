@@ -3,16 +3,13 @@ const {
 } = require('../../routes/students/student.controller');
 const {
     createStudent,
-    getStudentsBySchool,
     findStudentById,
     updateStudentById,
-    existsStudentById,
     deleteStudentById,
     getAllStudents
 } = require('../../models/students/student.model');
 const BaseResponse = require('../../base/BaseResponse');
 const StatusCodes = require('../../constants/StatusCodes');
-const NotFoundError = require('../../exceptions/NotFoundError');
 
 jest.mock('../../models/students/student.model');
 
