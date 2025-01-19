@@ -8,7 +8,7 @@ const {Types} = require("mongoose");
  */
 async function findClassroomById(classroomId) {
     // Convert the string to an ObjectId
-    return  Classroom.findOne({_id: classroomId});
+    return Classroom.findOne({_id: classroomId});
 }
 
 /**
@@ -66,7 +66,7 @@ async function deleteClassroomById(classroomId) {
  * @param {number} skip
  * @returns {Promise<Array<Object>>}
  */
-async function getAllClassrooms(limit, skip) {
+async function getAllClassrooms(limit = 10, skip = 0) {
     return Classroom.find({}, {__v: 0, _id: 1})
         .sort({name: 1}) // Optional: sort by name alphabetically
         .skip(skip)
