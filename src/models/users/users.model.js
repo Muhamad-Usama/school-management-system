@@ -81,7 +81,7 @@ async function deleteUserById(userId) {
  * @returns {Promise<Array<Object>>}
  */
 async function getAllUsers(limit, skip) {
-    return User.find({}, {password: 0, __v: 0, _id: 0})
+    return User.find({}, {password: 0, __v: 0, _id: 1})
         .sort({name: 1}) // Optional: sort by name alphabetically
         .skip(skip)
         .limit(limit);
