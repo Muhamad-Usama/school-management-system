@@ -40,7 +40,7 @@ async function updateUserById(userId, updateData) {
  */
 
 async function findUserById(userId) {
-    return User.findOne({id: userId});
+    return User.findOne({_id: userId});
 }
 
 
@@ -61,7 +61,7 @@ async function existsUserById(userId) {
  */
 async function existsUserWithEmail(email) {
     const user = await findUserByEmail(email);
-    return !user;
+    return user !== null && user !== undefined;
 }
 
 /**
