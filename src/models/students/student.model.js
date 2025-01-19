@@ -18,7 +18,7 @@ async function createStudent(studentData) {
  * @returns {Promise<Array<Object>>}
  */
 async function getStudentsBySchool(schoolId, limit = 10, skip = 0) {
-    return Student.find({schoolId}, {__v: 0, _id: 0, password: 0}) // Exclude sensitive fields
+    return Student.find({schoolId}, {__v: 0, _id: 1}) // Exclude sensitive fields
         .sort({name: 1}) // Sort by name alphabetically
         .skip(skip)
         .limit(limit);
@@ -30,7 +30,7 @@ async function getStudentsBySchool(schoolId, limit = 10, skip = 0) {
  * @returns {Promise<Object>}
  */
 async function findStudentById(studentId) {
-    return Student.findOne({id: studentId});
+    return Student.findOne({_id: studentId});
 }
 
 /**
@@ -40,7 +40,7 @@ async function findStudentById(studentId) {
  * @returns {Promise<Object>}
  */
 async function updateStudentById(studentId, studentData) {
-    return Student.findOneAndUpdate({id: studentId}, studentData, {new: true});
+    return Student.findOneAndUpdate({_id: studentId}, studentData, {new: true});
 }
 
 /**
@@ -50,7 +50,7 @@ async function updateStudentById(studentId, studentData) {
  */
 async function existsStudentById(studentId) {
     const student = await findStudentById(studentId);
-    return !!student; // Return true if the student exists
+    return student !== null && student !== undefined; // Return true if the student exists
 }
 
 /**
@@ -59,7 +59,7 @@ async function existsStudentById(studentId) {
  * @returns {Promise<boolean>}
  */
 async function deleteStudentById(studentId) {
-    const result = await Student.deleteOne({id: studentId});
+    const result = await Student.deleteOne({_id: studentId});
     return result.deletedCount === 1;
 }
 
@@ -70,7 +70,7 @@ async function deleteStudentById(studentId) {
  * @returns {Promise<Array<Object>>}
  */
 async function getAllStudents(limit = 10, skip = 0) {
-    return Student.find({}, {__v: 0, _id: 0}) // Exclude sensitive fields
+    return Student.find({}, {__v: 0, _id: 1}) // Exclude sensitive fields
         .sort({name: 1}) // Sort by name alphabetically
         .skip(skip)
         .limit(limit);
