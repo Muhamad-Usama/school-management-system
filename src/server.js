@@ -1,27 +1,31 @@
-const http = require("http");
 require("dotenv").config();
 const app = require("./app");
-const {INTERNAL_SERVER_ERROR} = require("./constants/StatusCodes");
+const { connectMongo } = require("./config/mongo");
+const { connectRedis } = require("./config/redisClient");
+const { INTERNAL_SERVER_ERROR } = require("./constants/StatusCodes");
 const BaseResponse = require("./base/BaseResponse");
-const {connectMongo} = require("./config/mongo");
-const {connectRedis} = require("./config/redisClient");
-const PORT = process.env.PORT || 8000;
 
-app.use(async (err, req, res, next) => {
-    const errorCode = err.status ?? INTERNAL_SERVER_ERROR;
-    const errorMessage = err.message.trim() ?? "something.went.wrong";
-    return res.status(200).json(BaseResponse.error(errorCode, errorMessage));
-});
-
-// create server with http module
-const server = http.createServer(app);
-
-async function startServer() {
-    await connectMongo();
-    await connectRedis();
-    server.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
+async function initConnections() {
+    try {
+        // Initialize MongoDB and Redis connections
+        await connectMongo();
+        await connectRedis();
+    } catch (error) {
+        console.error("Error initializing connections:", error);
+        throw new Error("Failed to connect to services");
+    }
 }
 
-startServer().then(() => console.log("Server started successfully")).catch(console.error);
+// Vercel expects an exported handler function, not an HTTP server
+module.exports = async (req, res) => {
+    try {
+        // Initialize MongoDB and Redis connections before handling the request
+        await initConnections();
+
+        // Pass the request and response to the Express app
+        app(req, res);  // Vercel will invoke this for each request
+    } catch (error) {
+        console.error("Error in serverless function:", error);
+        res.status(500).json(BaseResponse.error(INTERNAL_SERVER_ERROR, "Internal Server Error"));
+    }
+};
