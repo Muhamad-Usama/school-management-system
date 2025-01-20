@@ -13,10 +13,10 @@
     }
   ],
   "env": {
-    "MONGO_URI": "@mongo-uri",
-    "REDIS_URI": "@redis-uri",
-    "SECRET_KEY": "@secret-key",
-    "REFRESH_TOKEN_SECRET": "@refresh-token-secret-key",
+    "MONGO_URI": "@mongo_uri",
+    "REDIS_URI": "@redis_uri",
+    "SECRET_KEY": "@secret_key",
+    "REFRESH_TOKEN_SECRET": "@refresh_token_secret_key",
     "PORT": "8000",
     "NODE_ENV": "production"
   }
