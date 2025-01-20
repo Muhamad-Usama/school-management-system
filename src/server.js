@@ -5,7 +5,6 @@ const {INTERNAL_SERVER_ERROR} = require("./constants/StatusCodes");
 const BaseResponse = require("./base/BaseResponse");
 const {connectMongo} = require("./config/mongo");
 const {connectRedis} = require("./config/redisClient");
-const {translate} = require("./config/i18n");
 const PORT = process.env.PORT || 8000;
 
 app.use(async (err, req, res, next) => {

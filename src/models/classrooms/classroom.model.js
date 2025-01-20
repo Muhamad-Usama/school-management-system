@@ -1,4 +1,5 @@
 const Classroom = require('./classroom.mongo');
+const {Types} = require("mongoose");
 
 /**
  * Find a classroom by ID.
@@ -6,7 +7,8 @@ const Classroom = require('./classroom.mongo');
  * @returns {Promise<Object>}
  */
 async function findClassroomById(classroomId) {
-    return Classroom.findOne({id: classroomId});
+    // Convert the string to an ObjectId
+    return Classroom.findOne({_id: classroomId});
 }
 
 /**
@@ -25,7 +27,7 @@ async function saveClassroom(classroom) {
  * @returns {Promise<Object>}
  */
 async function updateClassroomById(classroomId, updateData) {
-    return Classroom.findOneAndUpdate({id: classroomId}, updateData, {new: true});
+    return Classroom.findOneAndUpdate({_id: classroomId}, updateData, {new: true});
 }
 
 /**
@@ -35,7 +37,17 @@ async function updateClassroomById(classroomId, updateData) {
  */
 async function existsClassroomById(classroomId) {
     const classroom = await findClassroomById(classroomId);
-    return !!classroom;
+    return classroom !== null && classroom !== undefined;
+}
+
+/**
+ * Check if a classroom exists by name.
+ * @returns {Promise<boolean>}
+ * @param name
+ */
+async function existsClassroomByName(name) {
+    const classroom = await Classroom.findOne({name: name});
+    return classroom !== null && classroom !== undefined;
 }
 
 /**
@@ -44,7 +56,7 @@ async function existsClassroomById(classroomId) {
  * @returns {Promise<boolean>}
  */
 async function deleteClassroomById(classroomId) {
-    const result = await Classroom.deleteOne({id: classroomId});
+    const result = await Classroom.deleteOne({_id: classroomId});
     return result.deletedCount === 1;
 }
 
@@ -54,13 +66,19 @@ async function deleteClassroomById(classroomId) {
  * @param {number} skip
  * @returns {Promise<Array<Object>>}
  */
-async function getAllClassrooms(limit, skip) {
-    return Classroom.find({}, {__v: 0, _id: 0})
+async function getAllClassrooms(limit = 10, skip = 0) {
+    return Classroom.find({}, {__v: 0, _id: 1})
         .sort({name: 1}) // Optional: sort by name alphabetically
         .skip(skip)
         .limit(limit);
 }
 
 module.exports = {
-    findClassroomById, saveClassroom, updateClassroomById, existsClassroomById, deleteClassroomById, getAllClassrooms
+    findClassroomById,
+    saveClassroom,
+    updateClassroomById,
+    existsClassroomById,
+    deleteClassroomById,
+    getAllClassrooms,
+    existsClassroomByName
 };

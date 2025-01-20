@@ -40,7 +40,7 @@ async function updateUserById(userId, updateData) {
  */
 
 async function findUserById(userId) {
-    return User.findOne({id: userId});
+    return User.findOne({_id: userId});
 }
 
 
@@ -61,7 +61,7 @@ async function existsUserById(userId) {
  */
 async function existsUserWithEmail(email) {
     const user = await findUserByEmail(email);
-    return !user;
+    return user !== null && user !== undefined;
 }
 
 /**
@@ -81,7 +81,7 @@ async function deleteUserById(userId) {
  * @returns {Promise<Array<Object>>}
  */
 async function getAllUsers(limit, skip) {
-    return User.find({}, {password: 0, __v: 0, _id: 0})
+    return User.find({}, {password: 0, __v: 0, _id: 1})
         .sort({name: 1}) // Optional: sort by name alphabetically
         .skip(skip)
         .limit(limit);

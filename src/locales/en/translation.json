@@ -79,5 +79,7 @@
   "validation.student.transferHistory.toClassroomId.invalid": "To classroom ID must be a valid MongoDB ObjectId.",
   "validation.student.transferHistory.transferDate.invalid": "Transfer date must be a valid date.",
   "validation.student.transferHistory.reason.invalid": "Transfer reason must be a valid string.",
-  "validation.student.transferHistory.notes.invalid": "Transfer notes must be a valid string."
+  "validation.student.transferHistory.notes.invalid": "Transfer notes must be a valid string.",
+  "multiple.invalid.attempts": "Multiple invalid attempts, account locked for 30 minutes",
+  "classrooms.already.exists": "Classroom already exists"
 }

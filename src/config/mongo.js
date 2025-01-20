@@ -14,9 +14,8 @@ mongoose.connection.on("error", (err) => {
 });
 
 async function connectMongo() {
-    await mongoose.connect(MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+    await mongoose.connect(MONGO_URL?.toString(), {
+        useNewUrlParser: true, useUnifiedTopology: true,
     });
 }
 

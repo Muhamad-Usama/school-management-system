@@ -5,6 +5,7 @@ const {getPagination} = require("../../utils/query");
 const BaseResponse = require("../../base/BaseResponse");
 const DuplicateRecordError = require("../../exceptions/DuplicateRecordError");
 const NotFoundError = require("../../exceptions/NotFoundError");
+const StatusCodes = require("../../constants/StatusCodes");
 
 /**
  * Get all users with pagination. Limit and skip are optional query parameters. Default limit is 10. Default skip is 0.
@@ -14,9 +15,13 @@ const NotFoundError = require("../../exceptions/NotFoundError");
  */
 
 async function httpGetAllUsers(req, res) {
-    const {limit, skip} = getPagination(req.query);
-    const users = await getAllUsers(limit, skip);
-    return res.status(200).json(BaseResponse.success(users));
+    try {
+        const {limit, skip} = getPagination(req.query);
+        const users = await getAllUsers(limit, skip);
+        return res.status(200).json(BaseResponse.success(users));
+    } catch (e) {
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, "internal.server.error"));
+    }
 }
 
 /**
@@ -31,14 +36,14 @@ async function httpAddUser(req, res) {
 
     // Check if user with email already exists
     if (await existsUserWithEmail(user.email)) {
-        throw new DuplicateRecordError("email.already.exists");
+        return res.status(400).json(BaseResponse.error(StatusCodes.DUPLICATE_RECORD, "email.already.exists"));
     }
 
     try {
         const savedUser = await saveUser(user);
         return res.status(201).json(BaseResponse.success(savedUser));
     } catch (err) {
-        throw new Error(err.message);
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, "internal.server.error"));
     }
 }
 
@@ -55,14 +60,14 @@ async function httpUpdateUser(req, res) {
 
     const userExists = await existsUserById(userId);
     if (!userExists) {
-        throw new NotFoundError('user.not.found');
+        return res.status(404).json(BaseResponse.error(StatusCodes.NOT_FOUND, "user.not.found"));
     }
 
     try {
         const updatedUser = await updateUserById(userId, updateData);
         return res.status(200).json(BaseResponse.success(updatedUser));
     } catch (err) {
-        throw new Error(err.message);
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, "internal.server.error"));
     }
 }
 
@@ -78,7 +83,7 @@ async function httpDeleteUser(req, res) {
     // Check if user exists
     const userExists = await existsUserById(userId);
     if (!userExists) {
-        throw new NotFoundError('user.not.found');
+        return res.status(404).json(BaseResponse.error(StatusCodes.NOT_FOUND, "user.not.found"));
     }
 
     try {
@@ -87,7 +92,7 @@ async function httpDeleteUser(req, res) {
             deleted
         }));
     } catch (err) {
-        throw new Error(err.message);
+        return res.status(500).json(BaseResponse.error(StatusCodes.INTERNAL_SERVER_ERROR, "internal.server.error"));
     }
 }
 
