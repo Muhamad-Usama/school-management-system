@@ -11,8 +11,9 @@ const authRouter = require("./routes/auth/auth.routes");
 const app = express();
 
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: '*', // This allows all origins
 }));
+
 
 // Add the i18n middleware` to the Express app
 app.use(i18nMiddleware);
