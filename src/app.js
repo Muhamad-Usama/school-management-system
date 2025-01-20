@@ -22,6 +22,11 @@ app.use(express.json({limit: '3mb'}));
 
 app.use(morgan("combined"));
 
+// Serve the welcome page at the root
+app.get('/', (req, res) => {
+    res.status(200).send('<h1>Welcome to School Management System</h1>');
+});
+
 // add routes here
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
