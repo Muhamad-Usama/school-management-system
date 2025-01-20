@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // server setup
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URI;
 
 // use once if you are sure that event will be emitted once
 

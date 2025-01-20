@@ -21,8 +21,8 @@ coverage/
 *.iml
 
 # Environment variables
-.env
 .env.local
+.env
 .env.*.local
 
 # OS files
